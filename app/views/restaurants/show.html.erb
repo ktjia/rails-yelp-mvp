@@ -1,0 +1,52 @@
+
+<div class="header padded text-center">
+  <h1><%= @restaurant.name %></h1>
+
+  <div id="address">
+    <h4>Address: </h4>
+    <%= @restaurant.address %>
+  </div>
+  <% if @restaurant.phone_number %>
+    <div id="phone-number">
+      <h4>Contact details: </h4>
+      <%= @restaurant.phone_number %>
+    </div>
+  <% end %>
+
+</div>
+<% if @restaurant.reviews.first %>
+ <div class="wrapper-grey padded text-center">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-md-offset-2 ">
+          <h4>Rating</h4>
+        </div>
+
+          <h4>Content</h4>
+        </div>
+
+      </div>
+
+      <% @restaurant.reviews.each do |review| %>
+      <div class="wrapper-grey padded text-center">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-md-4 col-md-offset-2 ">
+          <%= raw ("#{icon('star-o')} " * review.rating.to_i)  %>
+        </div>
+
+          <%= review.content %>
+
+          <%= link_to 'Delete', restaurant_review_path(restaurant_id: @restaurant.id, id: review.id), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </div>
+    </div>
+          <% end %>
+    <hr>
+  </div>
+<% end %>
+
+<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+<%= link_to 'Back', restaurants_path %> |
+<%= link_to 'Add Review', new_restaurant_review_path(@restaurant) %>
+
